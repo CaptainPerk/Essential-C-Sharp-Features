@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LanguageFeatures.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LanguageFeatures.Controllers
 {
@@ -6,22 +7,17 @@ namespace LanguageFeatures.Controllers
     {
         public ViewResult Index()
         {
-            object[] data = { 275M, 29.95M, "apple", "orange", 100, 10};
-            decimal total = 0;
-            for (int i = 0; i < data.Length; i++)
+            Product[] productArray =
             {
-                switch (data[i])
-                {
-                    case decimal decimalValue:
-                        total += decimalValue;
-                        break;
-                    case int intValue when intValue > 50:
-                        total += intValue;
-                        break;
-                }
-            }
+                new Product {Name = "Kayak", Price = 275M},
+                new Product {Name = "Lifejacket", Price = 48.95M},
+                new Product {Name = "Soccer ball", Price = 19.50M},
+                new Product {Name = "Corner Flag", Price = 34.95M} 
+            };
 
-            return View("Index", new[] {$"Total: {total:C2}"});
+            decimal arrayTotal = productArray.FilterByPrice(20).TotalPrices();
+
+            return View("Index", new[] {$"Array Total: {arrayTotal:C2}"});
         }
     }
 }
