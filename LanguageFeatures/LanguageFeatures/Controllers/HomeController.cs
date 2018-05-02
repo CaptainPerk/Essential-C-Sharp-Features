@@ -1,6 +1,6 @@
-﻿using LanguageFeatures.Models;
+﻿using System.Collections.Generic;
+using LanguageFeatures.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace LanguageFeatures.Controllers
 {
@@ -8,16 +8,12 @@ namespace LanguageFeatures.Controllers
     {
         public ViewResult Index()
         {
-            var results = new List<string>();
-
-            foreach (var product in Product.GetProducts())
+            Dictionary<string, Product> products = new Dictionary<string, Product>
             {
-                string name = product?.Name ?? "<No Name>";
-                decimal? price = product?.Price ?? 0;
-                string relatedName = product?.Related?.Name ?? "<None>";
-                results.Add($"Name: {name}, Price: {price}, Related: {relatedName}");
-            }
-            return View(results);
+                ["Kayak"] = new Product { Name = "Kayak", Price = 275M },
+                ["Lifejacket"] = new Product { Name = "Lifejacket", Price = 48.95M }
+            };
+            return View("Index", products.Keys);
         }
     }
 }
