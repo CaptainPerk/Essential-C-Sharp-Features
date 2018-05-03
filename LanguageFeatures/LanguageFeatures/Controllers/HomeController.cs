@@ -1,5 +1,5 @@
-﻿using LanguageFeatures.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace LanguageFeatures.Controllers
 {
@@ -7,17 +7,15 @@ namespace LanguageFeatures.Controllers
     {
         public ViewResult Index()
         {
-            Product[] productArray =
+            var products = new[]
             {
-                new Product {Name = "Kayak", Price = 275M},
-                new Product {Name = "Lifejacket", Price = 48.95M},
-                new Product {Name = "Soccer ball", Price = 19.50M},
-                new Product {Name = "Corner Flag", Price = 34.95M} 
+                new {Name = "Kayak", Price = 275M},
+                new {Name = "Lifejacket", Price = 48.95M},
+                new {Name = "Soccer ball", Price = 19.50M},
+                new {Name = "Corner flag", Price = 34.95M}
             };
 
-            decimal arrayTotal = productArray.FilterByPrice(20).TotalPrices();
-
-            return View("Index", new[] {$"Array Total: {arrayTotal:C2}"});
+            return View(products.Select(p => p.GetType().Name));
         }
     }
 }
