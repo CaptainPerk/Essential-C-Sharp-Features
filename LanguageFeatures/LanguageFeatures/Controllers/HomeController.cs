@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+﻿using System.Linq;
+using LanguageFeatures.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace LanguageFeatures.Controllers
 {
     public class HomeController : Controller
     {
-        public ViewResult Index()
+        public async Task<ViewResult> Index()
         {
             var products = new[]
             {
@@ -15,7 +17,7 @@ namespace LanguageFeatures.Controllers
                 new {Name = "Corner flag", Price = 34.95M}
             };
 
-            return View(products.Select(p => p.GetType().Name));
+            return View(products.Select(p => $"{nameof(p.Name)}: {p.Name}, {nameof(p.Price)}: {p.Price}"));
         }
     }
 }
