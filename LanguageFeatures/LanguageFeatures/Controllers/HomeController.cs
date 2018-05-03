@@ -1,4 +1,5 @@
-﻿using LanguageFeatures.Models;
+﻿using System.Linq;
+using LanguageFeatures.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,8 +9,15 @@ namespace LanguageFeatures.Controllers
     {
         public async Task<ViewResult> Index()
         {
-            long? length = await MyAsyncMethods.GetPageLength();
-            return View(new[] {$"Length: {length}"});
+            var products = new[]
+            {
+                new {Name = "Kayak", Price = 275M},
+                new {Name = "Lifejacket", Price = 48.95M},
+                new {Name = "Soccer ball", Price = 19.50M},
+                new {Name = "Corner flag", Price = 34.95M}
+            };
+
+            return View(products.Select(p => $"{nameof(p.Name)}: {p.Name}, {nameof(p.Price)}: {p.Price}"));
         }
     }
 }
