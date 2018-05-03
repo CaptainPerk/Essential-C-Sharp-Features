@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LanguageFeatures.Models
 {
@@ -14,25 +15,12 @@ namespace LanguageFeatures.Models
             return total;
         }
 
-        public static IEnumerable<Product> FilterByPrice(this IEnumerable<Product> products, decimal minimumPrice)
+        public static IEnumerable<Product> Filter(this IEnumerable<Product> products, Func<Product, bool> selctor)
         {
             foreach (Product prod in products)
             {
-                if ((prod?.Price ?? 0) >= minimumPrice)
-                {
+                if (selctor(prod))
                     yield return prod;
-                }
-            }
-        }
-
-        public static IEnumerable<Product> FilterByName(this IEnumerable<Product> products, char firstLetter)
-        {
-            foreach (Product prod in products)
-            {
-                if (prod?.Name[0] == firstLetter)
-                {
-                    yield return prod;
-                }
             }
         }
     }
