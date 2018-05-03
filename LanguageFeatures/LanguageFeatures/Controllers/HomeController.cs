@@ -15,9 +15,10 @@ namespace LanguageFeatures.Controllers
                 new Product {Name = "Corner Flag", Price = 34.95M} 
             };
 
-            decimal arrayTotal = productArray.FilterByPrice(20).TotalPrices();
+            decimal priceFilterTotal = productArray.FilterByPrice(20).TotalPrices();
+            decimal nameFilterTotal = productArray.FilterByName('S').TotalPrices();
 
-            return View("Index", new[] {$"Array Total: {arrayTotal:C2}"});
+            return View("Index", new[] {$"Price Total: {priceFilterTotal:C2}", $"Name Total: {nameFilterTotal:C2}"});
         }
     }
 }
